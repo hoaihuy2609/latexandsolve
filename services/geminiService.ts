@@ -19,7 +19,7 @@ Your task:
 The response MUST only be the raw LaTeX code block starting with \\documentclass and ending with \\end{document}. Do not include any conversational filler text.`;
 
 // Initialize the API only once
-const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY || '';
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || process.env.API_KEY || '';
 const genAI = new GoogleGenerativeAI(apiKey);
 
 export const solveProblemFromImage = async (base64Image: string, mimeType: string): Promise<string> => {
