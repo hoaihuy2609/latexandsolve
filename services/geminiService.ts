@@ -19,16 +19,17 @@ Your task:
 The response MUST only be the raw LaTeX code block starting with \\documentclass and ending with \\end{document}. Do not include any conversational filler text.`;
 
 // Initialize the API only once
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || process.env.API_KEY || '';
+// Use import.meta.env which is the standard for Vite
+const apiKey = (import.meta as any).env.VITE_GEMINI_API_KEY || '';
 const genAI = new GoogleGenerativeAI(apiKey);
 
 export const solveProblemFromImage = async (base64Image: string, mimeType: string): Promise<string> => {
   if (!apiKey) {
-    throw new Error("API Key chưa được cấu hình. Vui lòng kiểm tra file .env");
+    throw new Error("API Key chưa được cấu hình. Vui lòng thêm VITE_GEMINI_API_KEY vào Environment Variables.");
   }
 
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash',
+    model: 'gemini-1.5-flash-latest',
     systemInstruction: SYSTEM_INSTRUCTION
   });
 
